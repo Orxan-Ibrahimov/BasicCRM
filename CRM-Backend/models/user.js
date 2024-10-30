@@ -35,6 +35,14 @@ const UserSchema = mongoose.Schema({
   },
 });
 
+UserSchema.virtual('id').get(function (params) {
+    return this._id.toHexString()
+});
+
+UserSchema.set('toJSON', {
+    virtuals: true,
+});
+
 Object.assign(UserSchema.statics, {
   Roles,
 });

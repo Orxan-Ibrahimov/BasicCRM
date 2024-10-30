@@ -18,6 +18,14 @@ const ClientSchema = mongoose.Schema({
   },
 });
 
+ClientSchema.virtual('id').get(function (params) {
+  return this._id.toHexString()
+});
+
+ClientSchema.set('toJSON', {
+  virtuals: true,
+});
+
 const Client = mongoose.model("Client", ClientSchema);
 
 exports.Client = Client;

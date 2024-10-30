@@ -6,13 +6,18 @@ const morgan = require("morgan");
 const API_URL = process.env.API_URL;
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const authJwt = require("./helpers/safety/jwt");
+const errorHandler = require("./helpers/safety/error-handler");
 const userRouter = require('./routes/user');
 const clientRouter = require('./routes/client');
 
+app.use(express.json());
 app.use(morgan('tiny'));
 app.use(cors());
 app.use(bodyParser.json());
+app.use(authJwt());
+app.use(errorHandler);
+app.options('*', cors())
 // app.use('/public/uploads', express.static(__dirname + '/public/uploads'));
 
 // Routes
