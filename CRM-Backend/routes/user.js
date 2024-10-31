@@ -5,6 +5,16 @@ const router = express.Router();
 const bcryptjs = require("bcryptjs");
 const multer = require("multer");
 const jwt = require("jsonwebtoken");
+const { Roles } = require("../helpers/enums/role");
+
+router.get("/:userId", async (req, res) => {
+  const user = await User.findById(req.params.userId).select("-password");
+
+  if (!user)
+    return res.status(404).json({ success: false, message: "User not found!" });
+
+  res.status(200).send(user);
+});
 
 // User Login Request
 router.post("/login", async (req, res) => {
@@ -12,12 +22,12 @@ router.post("/login", async (req, res) => {
   if (!user)
     return res
       .status(404)
-      .json({ success: false, message: "user can not found!" });
+      .json({ success: false, message: "This email was incorrect!" });
 
   if (!bcryptjs.compare(req.body.password, user.password))
     return res
       .status(404)
-      .json({ success: false, message: "password or nickname is inccorect" });
+      .json({ success: false, message: "password or email is inccorect" });
 
   const token = jwt.sign(
     { role: user.role, userId: user.id },
@@ -31,13 +41,16 @@ router.post("/login", async (req, res) => {
 
 // User Register Request
 router.post("/register", async (req, res) => {
+  const users = await User.find();
+  let role = Roles.member.toString();
+  if (users.length === 0) role = Roles.admin.toString();
   let user = new User({
     name: req.body.name,
     surname: req.body.surname,
     email: req.body.email,
     password: bcryptjs.hashSync(req.body.password),
     registrationDate: Date.now(),
-    role: req.body.role,
+    role: role,
   });
 
   user = user

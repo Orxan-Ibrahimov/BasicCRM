@@ -4,39 +4,45 @@ require("dotenv/config");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const API_URL = process.env.API_URL;
-const bodyParser = require('body-parser');
-const cors = require('cors');
+const bodyParser = require("body-parser");
+const cors = require("cors");
 const authJwt = require("./helpers/safety/jwt");
 const errorHandler = require("./helpers/safety/error-handler");
-const userRouter = require('./routes/user');
-const clientRouter = require('./routes/client');
+const userRouter = require("./routes/user");
+const clientRouter = require("./routes/client");
 
-app.use(express.json());
-app.use(morgan('tiny'));
-app.use(cors());
-app.use(bodyParser.json());
-app.use(authJwt());
-app.use(errorHandler);
-app.options('*', cors())
+// Middleware
+app.use(cors()); // Allow cross-origin requests
+app.use(morgan("tiny")); // Logging
+app.use(bodyParser.json()); // Parse JSON bodies
+app.use(express.json()); // Parse application/json
+
+// Uncomment if using JWT
+// app.use(authJwt()); 
+
+app.use(errorHandler); // Error handling middleware
+app.options("*", cors()); // Preflight requests
+
+// Static files (if needed)
 // app.use('/public/uploads', express.static(__dirname + '/public/uploads'));
 
 // Routes
 app.use(`${API_URL}/users`, userRouter);
 app.use(`${API_URL}/clients`, clientRouter);
 
+// Database connection
 mongoose
   .connect(process.env.DATABASE_CONNECTION, {
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
     dbName: "BasicCRM",
   })
   .then(() => {
-    console.log("Database Connecting...");
+    console.log("Database connected successfully.");
   })
   .catch((err) => {
-    console.log("an error was occured");
-    console.log(err);
+    console.error("Database connection error:", err);
   });
+
+// Start the server
 app.listen(3000, () => {
-  console.log("Database Listenning...");
+  console.log("Server is listening on port 3000...");
 });

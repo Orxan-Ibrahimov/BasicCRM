@@ -1,0 +1,36 @@
+<div class="registration-container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="registration">
+    <h1 class="registration-title">Sign In</h1>
+    <div class="input-group">
+      <input
+        type="text"
+        class="registration-input"
+        pInputText
+        formControlName="email"
+      />
+      <span class="registration-label">Email</span>
+    </div>
+    <p class="text-danger my-3" *ngIf="isSubmitted && form.get('email')?.invalid">Email is required.</p>
+
+
+    <div class="input-group">
+      <input
+        type="password"
+        class="registration-input"
+        pInputText
+        formControlName="password"
+        required
+      />
+      <span class="registration-label">Password</span>
+    </div>
+    <p class="text-danger my-3" *ngIf="isSubmitted && form.get('password')?.invalid">Password is required.</p>
+
+
+    <div class="registration-help">
+      <a href="" class="registration-white">Forgot Password</a>
+      <a [routerLink]="['/auth/register']" routerLinkActive="router-link-active"  class="registration-green">Sign up</a>
+    </div>
+    <div *ngIf="authError" class="text-danger my-3 fs-5">{{ authMessage }}</div>
+    <button type="submit" class="registration-btn">Login</button>
+  </form>
+</div>

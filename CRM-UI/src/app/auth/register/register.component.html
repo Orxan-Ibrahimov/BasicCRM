@@ -1,0 +1,71 @@
+<div class="registration-container">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="registration">
+      <h1 class="registration-title">Sign Up</h1>
+      <div class="input-group">
+        <input
+          type="text"
+          class="registration-input"
+          pInputText
+          formControlName="name"
+        />
+        <span class="registration-label">name</span>
+      </div>
+      <p class="text-danger my-3" *ngIf="isSubmitted && form.get('name')?.invalid">name is required.</p>
+  
+      <div class="input-group">
+        <input
+          type="text"
+          class="registration-input"
+          pInputText
+          formControlName="surname"
+        />
+        <span class="registration-label">surname</span>
+      </div>
+      <p class="text-danger my-3" *ngIf="isSubmitted && form.get('surname')?.invalid">surname is required.</p>
+  
+      <div class="input-group">
+        <input
+          type="text"
+          class="registration-input"
+          pInputText
+          formControlName="email"
+        />
+        <span class="registration-label">Email</span>
+      </div>
+      <p class="text-danger my-3" *ngIf="isSubmitted && form.get('email')?.invalid">Email is required.</p>
+  
+  
+      <div class="input-group">
+        <input
+          type="password"
+          class="registration-input"
+          pInputText
+          formControlName="password"
+          required
+        />
+        <span class="registration-label">Password</span>
+      </div>
+      <p class="text-danger my-3" *ngIf="isSubmitted && form.get('password')?.invalid">Password is required.</p>
+  
+
+      <div class="input-group">
+        <input
+          type="password"
+          class="registration-input"
+          pInputText
+          formControlName="confirm_password"
+          required
+        />
+        <span class="registration-label">Repeat Password</span>
+      </div>
+      <p class="text-danger my-3" *ngIf="isSubmitted && form.get('confirm_password')?.invalid">Repeated Password must be same with password!</p>
+  
+  
+      <div class="registration-help">
+        <a href="" class="registration-green">Sign in</a>
+      </div>
+      <div *ngIf="authError" class="text-danger my-3 fs-5">{{ authMessage }}</div>
+      <button type="submit" class="registration-btn">Login</button>
+    </form>
+  </div>
+  
