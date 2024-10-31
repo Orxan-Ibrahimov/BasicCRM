@@ -5,6 +5,9 @@ import { HomeComponent } from './home/home.component';
 import { ClientsComponent } from './home/clients/clients.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { RegisterComponent } from './auth/register/register.component';
+import { WelcomeComponent } from './home/welcome/welcome.component';
+import { ClientViewComponent } from './home/clients/client-view/client-view.component';
+import { AddClientComponent } from './home/clients/add-client/add-client.component';
 
 export const routes: Routes = [
   {
@@ -21,8 +24,12 @@ export const routes: Routes = [
     component: HomeComponent,
     canActivate: [AuthGuardService],
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'clients' }, // Default route
-      { path: 'clients', component: ClientsComponent },
+      { path: '', pathMatch: 'full', redirectTo: 'welcome' }, // Default route
+      { path: 'welcome', component: WelcomeComponent },
+      { path: 'clients', component: ClientsComponent, children: [
+        { path: 'add-client', component: AddClientComponent },
+        { path: ':cid', component: ClientViewComponent },
+      ] },
     ],
   },
   { path: '**', redirectTo: 'auth', pathMatch: 'full' },

@@ -1,0 +1,16 @@
+<h1 class="text-center">Clients Details</h1>
+
+<ul class="list-group list-group-flush">
+  <li class="list-group-item">
+    Organization: <span class="fw-bold fs-5">{{ client?.organization }}</span>
+  </li>
+  <li class="list-group-item">
+    Person name: <span class="fw-bold fs-5">{{ client?.person }}</span>
+  </li>
+  <li class="list-group-item">
+    Phone Number: <span class="fw-bold fs-5">{{ client?.phone }}</span>
+  </li>
+  <li class="list-group-item">
+    Created Date: <span class="fw-bold fs-5">{{ client?.createdDate | date: "MMMM d, y" }}</span>
+  </li>
+</ul>
