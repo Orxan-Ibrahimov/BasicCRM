@@ -32,6 +32,7 @@ router.post("/", async (req, res) => {
     organization: req.body.organization,
     person: req.body.person,
     phone: req.body.phone,
+    address: req.body.address,
     createdDate: Date.now(),
   });
 

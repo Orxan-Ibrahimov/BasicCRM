@@ -8,6 +8,9 @@ import {
 import { ClientsService } from '../../../services/clients.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { LocaleStorageService } from '../../../services/locale-storage.service';
+import { UsersService } from '../../../services/users.service';
+import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-add-client',
@@ -21,13 +24,23 @@ export class AddClientComponent implements OnInit {
   isSubmitted = false;
   authError = false;
   authMessage = 'Email or Password are wrong';
+  me: User | undefined;
 
   constructor(
     private formBuilder: FormBuilder,
     private clientsService: ClientsService,
-    private router: Router,
+    private usersService: UsersService,
+    private tokenStorageService: LocaleStorageService
   ) {}
   ngOnInit(): void {
+    this.tokenStorageService.me().subscribe((data) => {
+      if (data)
+        this.usersService.getUserById(data?.id).subscribe((user) => {
+          this.me = user;
+          console.log(this.me.role);
+        });
+    });
+
     this._initAuthForm();
   }
 
@@ -36,10 +49,16 @@ export class AddClientComponent implements OnInit {
       organization: ['', [Validators.required]],
       person: ['', [Validators.required]],
       phone: ['', [Validators.required]],
+      address: ['', [Validators.required]],
     });
   }
 
   onSubmit() {
+    if (this.me?.role !== 'admin') {
+      alert('Only admins can remove clients.');
+      return;
+    }
+
     this.isSubmitted = true;
 
     if (this.form?.invalid) return;
@@ -49,7 +68,8 @@ export class AddClientComponent implements OnInit {
       .addClient(
         this.getAuthForm['organization'].value,
         this.getAuthForm['person'].value,
-        this.getAuthForm['phone'].value
+        this.getAuthForm['phone'].value,
+        this.getAuthForm['address'].value
       )
       .subscribe(
         (response: any) => {

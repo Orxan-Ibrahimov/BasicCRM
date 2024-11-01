@@ -32,7 +32,7 @@ app.use(`${API_URL}/clients`, clientRouter);
 
 // Database connection
 mongoose
-  .connect(process.env.DATABASE_CONNECTION, {
+  .connect(process.env.DATABASE_CONNECTION, {  
     dbName: "BasicCRM",
   })
   .then(() => {
@@ -41,7 +41,7 @@ mongoose
   .catch((err) => {
     console.error("Database connection error:", err);
   });
-
+  
 // Start the server
 app.listen(3000, () => {
   console.log("Server is listening on port 3000...");

@@ -1,58 +1,75 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="my-4">
+  <h1 class="text-center">Add new organization</h1>
 
+  <div class="mb-3">
+    <label for="organization" class="form-label">Organization</label>
+    <input
+      type="text"
+      class="form-control"
+      id="organization"
+      pInputText
+      formControlName="organization"
+    />
+    <p
+      class="text-danger my-3"
+      *ngIf="isSubmitted && form.get('organization')?.invalid"
+    >
+      Organization is required.
+    </p>
+  </div>
+  <div class="mb-3">
+    <label for="person" class="form-label">Person</label>
+    <input
+      type="text"
+      class="form-control"
+      id="person"
+      pInputText
+      formControlName="person"
+    />
+    <p
+      class="text-danger my-3"
+      *ngIf="isSubmitted && form.get('person')?.invalid"
+    >
+      Person is required.
+    </p>
+  </div>
+  <div class="mb-3">
+    <label for="phone" class="form-label">Phone</label>
+    <input
+      type="text"
+      class="form-control"
+      id="phone"
+      pInputText
+      formControlName="phone"
+    />
+    <p
+      class="text-danger my-3"
+      *ngIf="isSubmitted && form.get('phone')?.invalid"
+    >
+      Phone is required.
+    </p>
+  </div>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="my-4">
-    <h1 class="text-center">Add new organization</h1>
+  <div class="mb-3">
+    <label for="address" class="form-label">Address</label>
+    <textarea
+      rows="5"
+      type="text"
+      class="form-control"
+      id="address"
+      pInputText
+      formControlName="address"
+    ></textarea>
 
-    <div class="mb-3">
-      <label for="organization" class="form-label">Organization</label>
-      <input
-        type="text"
-        class="form-control"
-        id="organization"
-        pInputText
-        formControlName="organization"
-      />
-      <p
-        class="text-danger my-3"
-        *ngIf="isSubmitted && form.get('organization')?.invalid"
-      >
-        Organization is required.
-      </p>
-    </div>
-    <div class="mb-3">
-      <label for="person" class="form-label">Person</label>
-      <input
-        type="text"
-        class="form-control"
-        id="person"
-        pInputText
-        formControlName="person"
-      />
-      <p
-        class="text-danger my-3"
-        *ngIf="isSubmitted && form.get('person')?.invalid"
-      >
-        Person is required.
-      </p>
-    </div>
-    <div class="mb-3">
-      <label for="phone" class="form-label">Phone</label>
-      <input
-        type="text"
-        class="form-control"
-        id="phone"
-        pInputText
-        formControlName="phone"
-      />
-      <p
-        class="text-danger my-3"
-        *ngIf="isSubmitted && form.get('phone')?.invalid"
-      >
-        Phone is required.
-      </p>
-    </div>
+    <p
+      class="text-danger my-3"
+      *ngIf="isSubmitted && form.get('address')?.invalid"
+    >
+      Address is required.
+    </p>
+  </div>
 
-    <div *ngIf="authError" class="text-danger my-3 fs-5">{{ authMessage }}</div>
+  <div *ngIf="authError" class="text-danger my-3 fs-5">{{ authMessage }}</div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

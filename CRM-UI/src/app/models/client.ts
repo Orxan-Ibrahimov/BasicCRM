@@ -3,5 +3,6 @@ export interface Client {
   organization: string;
   person: string;
   phone: string;
+  address: string;
   createdDate: Date;
 }

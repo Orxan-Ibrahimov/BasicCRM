@@ -13,6 +13,10 @@ const ClientSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  address: {
+    type: String,
+    required: true,
+  },
   createdDate: {
     type: Date,
   },

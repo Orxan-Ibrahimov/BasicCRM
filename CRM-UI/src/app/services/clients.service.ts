@@ -27,8 +27,8 @@ export class ClientsService {
     return this.http.get<Client>(`${this.ApiUrl}/${cid}`);
   }
 
-  addClient(organization: string, person:string, phone:string): Observable<Client> {
-    return this.http.post<Client>(this.ApiUrl, {organization, person, phone});
+  addClient(organization: string, person:string, phone:string, address:string): Observable<Client> {
+    return this.http.post<Client>(this.ApiUrl, {organization, person, phone, address});
   }
 
   removeClientById(cid: string): Observable<Client> {
